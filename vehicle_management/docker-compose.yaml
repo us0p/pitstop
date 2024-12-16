@@ -1,0 +1,11 @@
+name: vehicle_management
+
+services:
+  db:
+    image: postgres:17.2
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: vehicles

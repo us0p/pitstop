@@ -1,0 +1,7 @@
+name: MessageBroker
+
+services:
+  messagebroker:
+    image: apache/kafka:3.8.1
+    ports:
+      - 9092:9092

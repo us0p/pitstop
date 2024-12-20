@@ -3,5 +3,5 @@ export declare class VehicleKafkaService {
     private instance?;
     private kafkaClient;
     constructor();
-    publish(event: any): Promise<RecordMetadata[]>;
+    publish(events: any[]): Promise<RecordMetadata[]>;
 }

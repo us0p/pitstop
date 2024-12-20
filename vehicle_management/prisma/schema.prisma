@@ -23,3 +23,10 @@ model Vehicle {
     brand String
     licensenumber String
 }
+
+model VehicleMessageOutbox {
+    id Int @id @default(autoincrement())
+    action String
+    vehicledata String
+    delivered Boolean @default(false)
+}

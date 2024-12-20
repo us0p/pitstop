@@ -22,12 +22,12 @@ let VehicleKafkaService = class VehicleKafkaService {
         });
         return this;
     }
-    async publish(event) {
+    async publish(events) {
         const producer = this.kafkaClient.producer();
         await producer.connect();
         const recordMetadata = await producer.send({
             topic: process.env.KAFKA_TOPIC,
-            messages: [{ value: JSON.stringify(event) }]
+            messages: events.map(e => ({ value: JSON.stringify(e) }))
         });
         await producer.disconnect();
         return recordMetadata;

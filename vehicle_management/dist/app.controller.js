@@ -16,18 +16,15 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const vehicle_dto_1 = require("./vehicle.dto");
-const kafka_service_1 = require("./kafka.service");
 let AppController = class AppController {
-    constructor(vehicleDatabaseService, vehicleKafkaService) {
+    constructor(vehicleDatabaseService) {
         this.vehicleDatabaseService = vehicleDatabaseService;
-        this.vehicleKafkaService = vehicleKafkaService;
     }
     async listVehicles() {
         return await this.vehicleDatabaseService.getMany();
     }
     async createVehicle(body) {
         const vehicle = await this.vehicleDatabaseService.create(body);
-        await this.vehicleKafkaService.publish({ action: "CREATE", vehicle });
         return vehicle;
     }
 };
@@ -47,7 +44,6 @@ __decorate([
 ], AppController.prototype, "createVehicle", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.VehicleDatabaseService,
-        kafka_service_1.VehicleKafkaService])
+    __metadata("design:paramtypes", [app_service_1.VehicleDatabaseService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

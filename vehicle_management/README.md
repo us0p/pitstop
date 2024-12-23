@@ -30,6 +30,4 @@ Creating kafka broker and topics, testing event publising functionality
 - how to automatically setup topics in kafka, preferably during container configuration
 - how to implement transactional log tailing
 - create test cases
-- Change Data Capture (CDC)
 - Kafka Listeners?
-- Kafka Connect

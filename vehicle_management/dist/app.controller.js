@@ -14,17 +14,23 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
+const db_service_1 = require("./db.service");
 const vehicle_dto_1 = require("./vehicle.dto");
+const kafka_service_1 = require("./kafka.service");
 let AppController = class AppController {
-    constructor(vehicleDatabaseService) {
+    constructor(vehicleDatabaseService, vehicleKafkaService) {
         this.vehicleDatabaseService = vehicleDatabaseService;
+        this.vehicleKafkaService = vehicleKafkaService;
     }
     async listVehicles() {
         return await this.vehicleDatabaseService.getMany();
     }
+    async getVehicle(params) {
+        return await this.vehicleDatabaseService.getByID(Number(params.id));
+    }
     async createVehicle(body) {
         const vehicle = await this.vehicleDatabaseService.create(body);
+        await this.vehicleKafkaService.publish({ action: "VehicleCreated", vehicle });
         return vehicle;
     }
 };
@@ -36,6 +42,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "listVehicles", null);
 __decorate([
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "getVehicle", null);
+__decorate([
     (0, common_1.Post)("/create"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -44,6 +57,7 @@ __decorate([
 ], AppController.prototype, "createVehicle", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.VehicleDatabaseService])
+    __metadata("design:paramtypes", [db_service_1.VehicleDatabaseService,
+        kafka_service_1.VehicleKafkaService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

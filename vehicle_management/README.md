@@ -26,8 +26,7 @@ delivered - boolean (default: false)
 - VehicleRegistered
 
 ### Stoped at
-Creating kafka broker and topics, testing event publising functionality
-- how to automatically setup topics in kafka, preferably during container configuration
-- how to implement transactional log tailing
+- setup automatic topic creation
 - create test cases
-- Kafka Listeners?
+
+KafkaConfiguration, KafkaConnect, KafkaListeners

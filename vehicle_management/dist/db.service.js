@@ -9,33 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VehicleKafkaService = void 0;
+exports.VehicleDatabaseService = void 0;
 const common_1 = require("@nestjs/common");
-const kafkajs_1 = require("kafkajs");
-let VehicleKafkaService = class VehicleKafkaService {
+const client_1 = require("@prisma/client");
+let VehicleDatabaseService = class VehicleDatabaseService {
     constructor() {
         if (this.instance)
             return this.instance;
-        this.kafkaClient = new kafkajs_1.Kafka({
-            clientId: process.env.KAFKA_CLIENT_ID,
-            brokers: (process.env.KAFKA_BROKERS || "").split(",")
-        });
-        return this;
+        this.dbClient = new client_1.PrismaClient();
+        this.instance = this;
     }
-    async publish(event) {
-        const producer = this.kafkaClient.producer();
-        await producer.connect();
-        const recordMetadata = await producer.send({
-            topic: process.env.KAFKA_TOPIC,
-            messages: [{ value: JSON.stringify(event) }]
-        });
-        await producer.disconnect();
-        return recordMetadata;
+    async getMany() {
+        return this.dbClient.vehicle.findMany();
+    }
+    async getByID(id) {
+        return this.dbClient.vehicle.findUnique({ where: { id } });
+    }
+    async create(vehicle) {
+        return this.dbClient.vehicle.create({ data: vehicle });
     }
 };
-exports.VehicleKafkaService = VehicleKafkaService;
-exports.VehicleKafkaService = VehicleKafkaService = __decorate([
+exports.VehicleDatabaseService = VehicleDatabaseService;
+exports.VehicleDatabaseService = VehicleDatabaseService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [])
-], VehicleKafkaService);
-//# sourceMappingURL=kafka.service.js.map
+], VehicleDatabaseService);
+//# sourceMappingURL=db.service.js.map

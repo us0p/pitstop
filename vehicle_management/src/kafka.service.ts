@@ -16,12 +16,12 @@ export class VehicleKafkaService {
 		return this
 	}
 
-	async publish(events: any[]): Promise<RecordMetadata[]> {
+	async publish(event: any): Promise<RecordMetadata[]> {
 		const producer = this.kafkaClient.producer()
 		await producer.connect()
 		const recordMetadata = await producer.send({
 			topic: process.env.KAFKA_TOPIC,
-			messages: events.map(e => ({ value: JSON.stringify(e) }))
+			messages: [{ value: JSON.stringify(event) }]
 		})
 		await producer.disconnect()
 		return recordMetadata

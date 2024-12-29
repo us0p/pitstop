@@ -18,17 +18,3 @@ services:
       KAFKA_NUM_PARTITIONS: 3 
     ports:
       - 9092:9092
-  
-  kafkaconnect:
-    image: confluentinc/cp-kafka-connect:7.8.0
-    environment:
-      CONNECT_BOOTSTRAP_SERVERS: messagebroker:9092
-      CONNECT_GROUP_ID: kafka-connect
-      CONNECT_CONFIG_STORAGE_TOPIC: _connect-config
-      CONNECT_OFFSET_STORAGE_TOPIC: _connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: _connect-state
-      CONNECT_KEY_CONVERTER_: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
-      CONNECT_PLUGIN_PATH: /usr/share/confluent-hub-components
-    command: confluent connect plugin install debezium/debezium-connector-postgresql confluentinc/kafka-connect-jdbc

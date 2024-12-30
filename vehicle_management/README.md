@@ -9,12 +9,6 @@ ownerid - string
 brand - string
 licensenumber - string
 
-VehicleMessageOutbox
-id - int
-action - string
-vehicledata - string
-delivered - boolean (default: false)
-
 ## Functionality
 - Register Vehicle
 - List Vehicles
@@ -24,9 +18,3 @@ delivered - boolean (default: false)
 
 ## Events
 - VehicleRegistered
-
-### Stoped at
-- setup automatic topic creation
-- create test cases
-
-KafkaConfiguration, KafkaConnect, KafkaListeners

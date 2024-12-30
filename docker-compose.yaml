@@ -1,4 +1,4 @@
-name: MessageBroker
+name: message_broker
 
 services:
   messagebroker:

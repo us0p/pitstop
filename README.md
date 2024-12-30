@@ -1,6 +1,8 @@
 ## Todo
 - Add architecture and service functionality explanation
 - Add transactional outbox and transactional log tailing
+- Add Tests
+- Use Docker Swarm to provide service isolation
 
 
 # Pitstop

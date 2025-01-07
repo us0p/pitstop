@@ -10,6 +10,20 @@ This project is a clone of the following [Pitstop repo](https://github.com/Edwin
 The goal is to apply principles, patterns and concepts related to 
 microservices architecture.
 
+The goal of this project is to understand microservices architecture 
+components in practice and common technologies utilized to implement and 
+solve microservices challenges and patterns like message brokers, log 
+aggregation, metrics, service discovery and etc.
+To connect all the components in the architecture in compliance with 
+industry standards.
+The secondary goal is to gain familiarity with the Nest.js and Prisma 
+libraries.
+
+discover common technologies used in microservice architecture, or, common 
+technologies used for central components in a microservices architecture, 
+like, message brokers, event stores, api gateways and more.
+understand how the DDD model is used in the architecture.
+
 ## Architecture
 **Vehicle Management Service**
 Functionality: CREATE and READ (list and single by unique ID) vehicles.

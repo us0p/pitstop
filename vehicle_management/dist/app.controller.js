@@ -30,7 +30,11 @@ let AppController = class AppController {
     }
     async createVehicle(body) {
         const vehicle = await this.vehicleDatabaseService.create(body);
-        await this.vehicleKafkaService.publish({ action: "VehicleCreated", vehicle });
+        await this.vehicleKafkaService.publish({
+            action: "VehicleCreated",
+            vehicle,
+            timestamp: new Date().toISOString()
+        });
         return vehicle;
     }
 };

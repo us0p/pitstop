@@ -24,7 +24,11 @@ export class AppController {
 	@Post("/create")
 	async createVehicle(@Body() body: VehicleDTO): Promise<Vehicle> {
 		const vehicle = await this.vehicleDatabaseService.create(body)
-		await this.vehicleKafkaService.publish({ action: "VehicleCreated", vehicle })
+		await this.vehicleKafkaService.publish({
+			action: "VehicleCreated",
+			vehicle,
+			timestamp: new Date().toISOString()
+		})
 		return vehicle;
 	}
 }

@@ -67,10 +67,23 @@ services:
     ports:
       - 5001:5000
 
+  workshopeventhandler:
+    build: ./workshop_event_handler/
+    depends_on:
+      - messagebroker
+    volumes:
+      - type: bind
+        source: ./workshop_event_handler
+        target: /app
+    networks:
+      - bridge_network
+
 networks:
   vehicle_network:
     driver: bridge
   customer_network:
     driver: bridge
   bridge_network:
+    driver: bridge
+  workshop_network:
     driver: bridge

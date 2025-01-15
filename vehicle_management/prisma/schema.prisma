@@ -13,13 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Models in the Prisma schema have two main purposes:
-// - Represent the tables in the underlying database
-// - Serve as foundation for the generated Prisma Client API
 model Vehicle {
     id Int @id @default(autoincrement())
     type String
-    ownerid String
+    ownerid Int
     brand String
     licensenumber String
 }

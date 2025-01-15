@@ -17,7 +17,11 @@ const consumer = kafka.consumer({ groupId: "event-handler" });
 
 await consumer.connect();
 await consumer.subscribe({
-  topics: [process.env.KAFKA_VEHICLE_TOPIC, process.env.KAFKA_CUSTOMER_TOPIC],
+  topics: [
+    process.env.KAFKA_VEHICLE_TOPIC,
+    process.env.KAFKA_CUSTOMER_TOPIC,
+    process.env.KAFKA_WORKSHOP_TOPIC,
+  ],
   fromBeginning: true,
 });
 
@@ -43,6 +47,23 @@ await consumer.run({
           customer.name,
           customer.telephoneNumber,
         );
+      }
+      case process.env.KAFKA_WORKSHOP_TOPIC: {
+        const { event, data } = JSON.parse(message.value);
+        switch (event) {
+          case "PlanMaintenanceJob": {
+            return database.planMaintenance(
+              data.starttime,
+              data.endtime,
+              data.customerid,
+              data.vehicleid,
+              data.description,
+            );
+          }
+          default: {
+            throw Error("Unrecognized command: " + event);
+          }
+        }
       }
       default: {
         throw Error("Unrecognized topic: " + topic);

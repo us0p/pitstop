@@ -1,11 +1,12 @@
 import sqlite from "node:sqlite";
+const __dirname = import.meta.dirname;
 
 export class Database {
   #db = undefined;
 
   constructor() {
     if (this.#db) return this.#db;
-    this.#db = new sqlite.DatabaseSync("db.sqlite");
+    this.#db = new sqlite.DatabaseSync(__dirname + "/db" + "/db.sqlite");
   }
 
   applyMigrations(migrations) {
@@ -37,5 +38,18 @@ export class Database {
 	`);
 
     query.run(id, name, telephoneNumber);
+  }
+
+  planMaintenance(starttime, endtime, customerid, vehicleid, description) {
+    const query = this.#db.prepare(`
+	    INSERT INTO maintenancejob (
+		 starttime,
+		 endtime,
+		 customerid,
+		 vehicleid,
+		 description
+	    ) VALUES (?, ?, ?, ?, ?);
+	`);
+    query.run(starttime, endtime, customerid, vehicleid, description);
   }
 }

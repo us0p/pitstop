@@ -18,6 +18,7 @@ export class MaintenanceDTO {
 		customerid: number,
 		description: string,
 		actualstarttime: Date,
+		actualendtime: Date,
 		notes: string,
 		workshopplanningdate: Date
 	) {
@@ -28,7 +29,7 @@ export class MaintenanceDTO {
 		this.customerid = customerid
 		this.description = description
 		this.actualstarttime = actualstarttime
-		this.actualendtime = this.actualendtime
+		this.actualendtime = actualendtime
 		this.notes = notes
 		this.workshopplanningdate = workshopplanningdate
 	}

@@ -47,9 +47,41 @@ export class Database {
 		 endtime,
 		 customerid,
 		 vehicleid,
-		 description
-	    ) VALUES (?, ?, ?, ?, ?);
+		 description,
+		 workshopplanningdate
+	    ) VALUES (?, ?, ?, ?, ?, ?);
 	`);
-    query.run(starttime, endtime, customerid, vehicleid, description);
+
+    query.run(
+      starttime,
+      endtime,
+      customerid,
+      vehicleid,
+      description,
+      new Date().toISOString(),
+    );
+  }
+
+  finishMaintenance(maintenanceid, actualstarttime, actualendtime, notes) {
+    const query = this.#db.prepare(`
+	    UPDATE maintenancejob
+	    SET actualstarttime = ?, actualendtime = ?, notes = ?
+	    WHERE id = ?;
+	`);
+    query.run(actualstarttime, actualendtime, notes, maintenanceid);
+  }
+
+  getVehicle(id) {
+    const query = this.#db.prepare(`
+	    SELECT * FROM vehicle WHERE id = ?;
+	`);
+    return query.get(id);
+  }
+
+  getCustomer(id) {
+    const query = this.#db.prepare(`
+	    SELECT * FROM customer WHERE id = ?;
+	`);
+    return query.get(id);
   }
 }

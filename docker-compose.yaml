@@ -110,6 +110,17 @@ services:
     ports:
       - 5002:5000
 
+  notificationservice:
+    build: ./notification
+    networks:
+      - bridge_network
+    volumes:
+      - type: bind
+        source: ./notification
+        target: /app
+    depends_on:
+      - messagebroker
+
 networks:
   vehicle_network:
     driver: bridge

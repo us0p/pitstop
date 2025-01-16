@@ -60,6 +60,14 @@ await consumer.run({
               data.description,
             );
           }
+          case "FinishMaintenanceJob": {
+            return database.finishMaintenance(
+              data.maintenanceid,
+              data.actualstarttime,
+              data.actualendtime,
+              data.notes,
+            );
+          }
           default: {
             throw Error("Unrecognized command: " + event);
           }

@@ -32,6 +32,10 @@ services:
    
   vehiclemanagement:
      build: ./vehicle_management/
+     volumes:
+       - type: bind
+         source: ./vehicle_management/
+         target: /app
      depends_on:
        - vehicledb
        - messagebroker
@@ -52,6 +56,10 @@ services:
 
   customermanagement:
     build: ./customer_management/
+    volumes:
+      - type: bind
+        source: ./customer_management
+        target: /app
     depends_on:
       - customerdb
       - messagebroker
@@ -66,6 +74,9 @@ services:
     depends_on:
       - messagebroker
     volumes:
+      - type: bind
+        source: ./workshop_event_handler
+        target: /app
       - type: volume
         source: workshopdb
         target: /app/db
@@ -86,6 +97,9 @@ services:
       - workshop_network
       - bridge_network
     volumes:
+      - type: bind
+        source: ./workshop_management
+        target: /app
       - type: volume
         source: workshopdb
         target: /app/db
@@ -100,6 +114,10 @@ services:
     build: ./notification
     networks:
       - bridge_network
+    volumes:
+      - type: bind
+        source: ./notification
+        target: /app
     depends_on:
       - messagebroker
 

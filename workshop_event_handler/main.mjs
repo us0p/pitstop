@@ -13,7 +13,10 @@ const kafka = new Kafka({
   brokers: process.env.KAFKA_BROKERS.split(","),
 });
 
-const consumer = kafka.consumer({ groupId: "event-handler" });
+const consumer = kafka.consumer({
+  groupId: "event-handler",
+  allowAutoTopicCreation: true,
+});
 
 await consumer.connect();
 await consumer.subscribe({

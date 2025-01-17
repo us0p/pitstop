@@ -18,6 +18,7 @@ export class KafkaService {
   async consumer() {
     const consumer = this.#client.consumer({
       groupId: process.env.KAFKA_GROUP_ID,
+      allowAutoTopicCreation: true
     });
     await consumer.connect();
     await consumer.subscribe({ topic: process.env.KAFKA_WORKSHOP_TOPIC });

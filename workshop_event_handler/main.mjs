@@ -15,18 +15,29 @@ const kafka = new Kafka({
 
 const consumer = kafka.consumer({
   groupId: "event-handler",
-  allowAutoTopicCreation: true,
 });
 
 await consumer.connect();
-await consumer.subscribe({
-  topics: [
-    process.env.KAFKA_VEHICLE_TOPIC,
-    process.env.KAFKA_CUSTOMER_TOPIC,
-    process.env.KAFKA_WORKSHOP_TOPIC,
-  ],
-  fromBeginning: true,
-});
+try {
+  await consumer.subscribe({
+    topics: [
+      process.env.KAFKA_VEHICLE_TOPIC,
+      process.env.KAFKA_CUSTOMER_TOPIC,
+      process.env.KAFKA_WORKSHOP_TOPIC,
+    ],
+    fromBeginning: true,
+  });
+} catch (e) {
+  // Kafka.js send update operation (shuch as create topic) to Kafka node A
+  // then get the metadata from Kafka node B. But data was not sync to B at
+  // that time, so error raise. It seems that this just happen in Kafka
+  // with Kraft, Kafka with zookeeper seems to work fine.
+  // https://github.com/tulios/kafkajs/issues/815#issuecomment-1718917725
+
+  // Another solution would be to ensure the topic is registered before
+  // subscribing with kafka admin client.
+  if (e.type !== "UNKNOWN_TOPIC_OR_PARTITION") throw new Error(e);
+}
 
 await consumer.run({
   eachMessage: ({ topic, message }) => {

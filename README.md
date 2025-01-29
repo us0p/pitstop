@@ -1,6 +1,6 @@
 ## Todo
-- [ ] Fix Dockerfiles
-- [ ] Fix workshop event handler service, if the topics doesn't already 
+- [x] Fix Dockerfiles
+- [x] Fix workshop event handler service, if the topics doesn't already 
   exist in the broker, the service crashes
 - [ ] Improve system architecture
 - [ ] Add Tests
